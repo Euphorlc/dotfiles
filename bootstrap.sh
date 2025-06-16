@@ -13,7 +13,7 @@ if ! command -v stow >/dev/null 2>&1; then
   if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install stow
   elif [[ -f /etc/debian_version ]]; then
-    sudo apt update && sudo apt install -y -qq stow
+    sudo apt update -qq && sudo apt install -y -qq stow
   elif [[ -f /etc/redhat-release ]]; then
     sudo dnf install -y -q stow
   else
