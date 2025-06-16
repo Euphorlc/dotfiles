@@ -13,9 +13,9 @@ if ! command -v stow >/dev/null 2>&1; then
   if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install stow
   elif [[ -f /etc/debian_version ]]; then
-    sudo apt update && sudo apt install -y stow
+    sudo apt update && sudo apt install -y -qq stow
   elif [[ -f /etc/redhat-release ]]; then
-    sudo dnf install -y stow
+    sudo dnf install -y -q stow
   else
     echo "Please install GNU Stow manually."
     exit 1
@@ -25,7 +25,7 @@ fi
 # --- Step 2: Clone the dotfiles repo if it doesn't exist ---
 if [[ ! -d "$DOTFILES_DIR" ]]; then
   echo "[*] Cloning dotfiles into $DOTFILES_DIR"
-  git clone "$REPO_URL" "$DOTFILES_DIR"
+  git clone -q "$REPO_URL" "$DOTFILES_DIR"
 fi
 
 # --- Step 3: Run stow to create symlinks ---
