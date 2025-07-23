@@ -20,4 +20,15 @@ alias _i='sudo -i'
 alias fucking='sudo'
 alias please='sudo'
 
+# Color Variables
+set -U fish_color_command blue
+set -U fish_color_end brcyan
+set -U fish_color_error brwhite
+set -U fish_color_escape red
+set -U fish_color_operator red
+set -U fish_color_param brmagenta
+set -U fish_color_quote green
+set -U fish_color_quotes green
+set -U fish_color_redirection red
+
 starship init fish | source
