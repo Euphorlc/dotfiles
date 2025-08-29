@@ -37,6 +37,15 @@ if ! command -v fish >/dev/null 2>&1; then
   fi
 fi
 
+# --- Set Fish as default shell ---
+FISH_BIN="$(command -v fish)"
+if [[ -n "$FISH_BIN" ]]; then
+  echo "[*] Setting Fish as default shell..."
+  chsh -s "$FISH_BIN"
+else
+  echo "[!] Fish binary not found. Cannot set default shell."
+fi
+
 # --- Install Starship
 echo "[*] Installing Starship..."
 curl -sS https://starship.rs/install.sh | sh -s -- -y
@@ -53,3 +62,5 @@ echo "[*] Stowing Dotfiles"
 stow .
 
 echo "[✓] Bootstrap complete!"
+
+fish
