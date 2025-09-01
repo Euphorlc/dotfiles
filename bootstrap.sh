@@ -7,13 +7,15 @@ set -u  # Error on undefined variables
 DOTFILES_DIR="$HOME/dotfiles"
 REPO_URL="https://github.com/Euphorlc/dotfiles.git"
 
+echo "[!] Starting Bootstrap..."
+
 # --- Install GNU Stow ---
 if ! command -v stow >/dev/null 2>&1; then
   echo "[*] Installing GNU Stow..."
   if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install stow
   elif [[ -f /etc/debian_version ]]; then
-    sudo apt update -qq && sudo apt install -y -qq stow
+    sudo apt update && sudo apt install -y stow 1>/dev/null
   elif [[ -f /etc/redhat-release ]]; then
     sudo dnf install -y -q stow
   else
@@ -21,25 +23,6 @@ if ! command -v stow >/dev/null 2>&1; then
     exit 1
   fi
 fi
-
-# --- Install Fish Shell ---
-if ! command -v fish >/dev/null 2>&1; then
-  echo "[*] Installing Fish Shell..."
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install fish
-  elif [[ -f /etc/debian_version ]]; then
-    sudo apt update -qq && sudo apt install -y -qq fish
-  elif [[ -f /etc/redhat-release ]]; then
-    sudo dnf install -y -q fish
-  else
-    echo "Please install Fish Shell manually."
-    exit 1
-  fi
-fi
-
-# --- Install Starship
-echo "[*] Installing Starship..."
-curl -sS https://starship.rs/install.sh | sh -s -- -y
 
 # --- Clone the dotfiles repo if it doesn't exist ---
 if [[ ! -d "$DOTFILES_DIR" ]]; then
@@ -52,4 +35,24 @@ cd "$DOTFILES_DIR"
 echo "[*] Stowing Dotfiles"
 stow .
 
+# --- Install Fish Shell ---
+if ! command -v fish >/dev/null 2>&1; then
+  echo "[*] Installing Fish Shell..."
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install fish
+  elif [[ -f /etc/debian_version ]]; then
+    sudo apt update && sudo apt install -y fish 1>/dev/null
+  elif [[ -f /etc/redhat-release ]]; then
+    sudo dnf install -y -q fish
+  else
+    echo "Please install Fish Shell manually."
+    exit 1
+  fi
+fi
+
+# --- Install Starship
+echo "[*] Installing Starship..."
+curl -sS https://starship.rs/install.sh | sh -s -- -y 1>/dev/null
+
 echo "[✓] Bootstrap complete!"
+fish
