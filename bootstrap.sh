@@ -42,6 +42,8 @@ if ! command -v fish >/dev/null 2>&1; then
     brew install fish
   elif [[ -f /etc/debian_version ]]; then
     sudo apt update && sudo apt install -y fish 1>/dev/null
+    echo "[*] Setting Fish as default shell..."
+    chsh -s "$(which fish)" "$USER"
   elif [[ -f /etc/redhat-release ]]; then
     sudo dnf install -y -q fish
   else
